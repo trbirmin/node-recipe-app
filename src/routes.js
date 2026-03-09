@@ -39,5 +39,12 @@ router.post('/recipes/:id/edit', async (req, res) => {
 	])
 	res.redirect(`/recipes/${recipeId}`)
 })
-
+router.get('/recipes/random', async (req, res) => {
+	const db = await getDbConnection()
+	const recipes = await db.all('SELECT * FROM recipes')
+	if (!recipes || recipes.length === 0) {
+		return res.redirect('/recipes')
+	}
+	res.render('recipe', { recipe })
+})
 module.exports = router
